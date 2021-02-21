@@ -5,16 +5,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ShoppingListComponentComponent } from './components/shopping-list-component/shopping-list-component.component';
 import { ListItem } from  './models/list-item';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ShoppingListComponentComponent
+    ShoppingListComponentComponent,
+    ProductListComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgbModule
   ],
   providers: [],
   bootstrap: [AppComponent]

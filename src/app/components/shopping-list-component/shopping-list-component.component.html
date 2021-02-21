@@ -1,1 +1,23 @@
-<p>shopping-list-component works!</p>
+<div class="row" >
+    <app-product-list class="col-lg-5" [products]="currentItems" [header]="'current'"></app-product-list>
+    <div class="col-lg-2 d-flex flex-column justify-content-around">
+        <div class="nav-buttons">
+            <button class="btn btn-primary">
+                <i class="fa fa-angle-double-right"></i>
+            </button>
+            <button class="btn btn-primary">
+                <i class="fa fa-angle-double-left"></i>
+            </button>
+        </div>
+
+        <div class="nav-buttons">
+            <button class="btn btn-primary">
+                <i class="fa fa-angle-double-up"></i>
+            </button>
+            <button class="btn btn-primary">
+                <i class="fa fa-angle-double-down"></i>
+            </button>
+        </div>
+    </div>
+    <app-product-list class="col-lg-5" [products]="currentItems" [header]="'previous'"></app-product-list>
+</div>`
