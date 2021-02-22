@@ -8,3 +8,7 @@
 .table-fixed thead,tbody,tr,td,th {
     display: block;
 }
+fa-exclamation-triangle {
+    color: red;
+    text-decoration-color: red;
+}

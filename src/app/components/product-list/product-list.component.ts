@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { ListItem } from 'src/app/models/list-item';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
+import { ProductList } from 'src/app/models/product-list';
 
 @Component({
   selector: 'app-product-list',
@@ -7,21 +7,27 @@ import { ListItem } from 'src/app/models/list-item';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
-  
+  ngOnInit(): void {
+  }
+
   @Input()
-  public products: ListItem[];
+  selectedItem: number;
+  @Output()
+  changeSelectedItem = new EventEmitter<number>();
+
+  @Input()
+  public products: ProductList;
 
   @Input()
   public header: string;
 
+
   public pageSize: number = 10;
-  public page: number;
+  public page: number = 1; 
 
+  public selectItem(itemId: number): void {
+    this.selectedItem = itemId;
+    this.changeSelectedItem.emit(itemId);
 
-  constructor() { }
-
-  ngOnInit() {
-    this.page = 1;
   }
-
 }

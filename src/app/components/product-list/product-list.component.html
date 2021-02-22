@@ -1,18 +1,22 @@
-
 <div class="table-wrapper-scroll-y my-custom-scrollbar">
-<table class="table table-bordered table-fixed">
-    <thead>
-        <tr>
-            <th> {{ header }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr *ngFor="let item of products | slice: (page-1) * pageSize : page * pageSize ">
-            <td> {{ item.ItemName }}</td>
-        </tr>
-    </tbody>
-</table>
+    <table class="table table-bordered table-fixed">
+        <thead>
+            <tr>
+                <th> {{ header }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of products.productItems | slice: (page-1) * pageSize : page * pageSize "
+                (click)="selectItem(item.ItemID)">
+                <td [class.bg-primary]="selectedItem === item.ItemID">
+                    <span style="color: red">
+                        <i *ngIf="item.HighPriority" class="fa fa-exclamation-triangle"></i>
+                    </span>
+                    {{ item.ItemName }}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
-<ngb-pagination *ngIf="products.length > pageSize" [(page)]="page" [pageSize]="pageSize"
-    [collectionSize]="products.length">
+<ngb-pagination [(page)]="page" [pageSize]="pageSize" [collectionSize]="products.getSize()">
 </ngb-pagination>
