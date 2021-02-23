@@ -1,8 +1,6 @@
-import { BoundElementProperty } from '@angular/compiler';
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { FormType } from 'src/app/models/form-type.enum';
 
 @Component({
   selector: 'app-add-item-form',
@@ -14,7 +12,6 @@ export class AddItemFormComponent implements OnInit {
     public activeModal: NgbActiveModal,
     private formBuilder: FormBuilder
   ) { }
-
 
   @Input()
   isEdit: boolean = false;
@@ -31,7 +28,6 @@ export class AddItemFormComponent implements OnInit {
   public addForm: FormGroup;
 
   private createForm() {
-    debugger;
     if (this.isEdit) {
       this.addForm = this.formBuilder.group({
         itemName: this.editItemName,

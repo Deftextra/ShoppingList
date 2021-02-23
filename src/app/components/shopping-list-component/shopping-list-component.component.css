@@ -5,9 +5,27 @@
 
 .nav-buttons button i {
     font-size: x-large;
-
 }
 
-.nav-modify-buttons button {
-    margin-left: 10px;
+
+/* Bootstrap sm screen size 576px */
+@media only screen and (min-width: 576px)
+{
+    .nav-container  {
+        /*  (Size of pager) + (magin-botton of table) */
+        /*  (38px + 16px) +  (16px + 1px)  */
+        margin-bottom: 71px;
+    }
+
+    .btn-container > button {
+        width: 100%;
+    }
 }
+
+/* Prevent edit text from overflowing */
+@media (max-width: 619px) and (min-width: 576px) {
+    #edit-text {
+        display: none;
+    }
+}
+

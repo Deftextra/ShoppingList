@@ -1,7 +1,10 @@
 
+thead {
+    font-size: larger;
+}
+
 .table-fixed tbody {
     height: 500px;
-    overflow-y:auto;
     width: 100%;
 }
 
@@ -11,4 +14,20 @@
 fa-exclamation-triangle {
     color: red;
     text-decoration-color: red;
+}
+
+.selected {
+    background-color: grey;
+}
+
+/* This only evaluates on the primary input mehtod */
+@media (any-hover: hover) {
+    td:hover {
+        background-color:rgba(0, 0, 0, 0.075);
+    }
+}
+
+/* Smart phones touch screen */
+@media (pointer: coarse) {
+
 }

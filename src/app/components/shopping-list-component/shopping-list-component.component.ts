@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddFormValue } from 'src/app/models/add-form-value';
+import { ArrowClick } from 'src/app/models/arrow-click.enum';
 import { ProductList } from 'src/app/models/product-list';
+import { itemArrowClickService } from 'src/app/services/arrow-button.service';
 import { AddItemFormComponent } from '../add-item-form/add-item-form.component';
 
 @Component({
@@ -10,13 +12,29 @@ import { AddItemFormComponent } from '../add-item-form/add-item-form.component';
   styleUrls: ['./shopping-list-component.component.css']
 })
 export class ShoppingListComponentComponent implements OnInit {
+  constructor(
+    private modalService: NgbModal,
+    private arrowButtonService: itemArrowClickService) { }
 
+  ngOnInit() {
+    // TODO refactor and move to a service
+    this.currentItems = ProductList.Create();
+    this.previousItems = ProductList.Create();
 
-  constructor(private modalService: NgbModal) { }
+    for (let index = 0; index < 20; index++) {
+      this.currentItems.addItem(`current ${index}`);
+    }
+
+    for (let index = 0; index < 10; index++) {
+      this.previousItems.addItem(`previous ${index}`);
+    }
+  }
+
 
   public closeResult: string;
 
   public currentItems: ProductList;
+
   public previousItems: ProductList;
 
   public selectedCurrentItemId: number;
@@ -41,13 +59,13 @@ export class ShoppingListComponentComponent implements OnInit {
 
   public moveSIFromCurrentToPrevious() {
 
-    debugger;
     if (this.selectedCurrentItemId && !this.selectedPreviousItemId) {
       let deleteItem = this.currentItems.DeleteProduct(this.selectedCurrentItemId);
 
       if (deleteItem) {
-        this.previousItems.addItem(deleteItem.ItemName, deleteItem.HighPriority);
+        this.previousItems.addExistingItem(deleteItem);
       }
+      this.selectedCurrentItemId = null;
     }
 
     // TODO: maybe out at service with shows warning.
@@ -57,9 +75,10 @@ export class ShoppingListComponentComponent implements OnInit {
     if (this.selectedPreviousItemId && !this.selectedCurrentItemId) {
       let deleteItem = this.previousItems.DeleteProduct(this.selectedPreviousItemId);
 
-      this.currentItems.addItem(deleteItem.ItemName, deleteItem.HighPriority);
-
-
+      if (deleteItem) {
+        this.currentItems.addExistingItem(deleteItem);
+      }
+      this.selectedPreviousItemId = null;
     }
     // TODO : maybe add  service which shows warning.
   }
@@ -71,7 +90,6 @@ export class ShoppingListComponentComponent implements OnInit {
     modalRef.componentInstance.isDelete = true;
 
     modalRef.result.then((result: boolean) => {
-
 
       if (this.selectedPreviousItemId && !this.selectedCurrentItemId) {
         this.previousItems.DeleteProduct(this.selectedPreviousItemId);
@@ -132,41 +150,42 @@ export class ShoppingListComponentComponent implements OnInit {
     }
   }
 
+  // Refactor this code.
   public moveSelectedItemUp() {
-
     if (this.selectedCurrentItemId) {
       this.currentItems.moveItemUp(this.selectedCurrentItemId);
+      this.arrowButtonService.arrowClick({
+        productListId: this.currentItems.listId,
+        clickValue: ArrowClick.Up
+      });
     }
 
     if (this.selectedPreviousItemId) {
       this.previousItems.moveItemUp(this.selectedPreviousItemId);
+      this.arrowButtonService.arrowClick({
+        productListId: this.previousItems.listId,
+        clickValue: ArrowClick.Up
+      });
     }
-
   }
 
   public moveSelectedItemDown() {
-
     if (this.selectedCurrentItemId) {
       this.currentItems.moveItemDown(this.selectedCurrentItemId);
+      this.arrowButtonService.arrowClick({
+        productListId: this.currentItems.listId,
+        clickValue: ArrowClick.Down
+      });
     }
 
     if (this.selectedPreviousItemId) {
       this.previousItems.moveItemDown(this.selectedPreviousItemId);
+      this.arrowButtonService.arrowClick({
+        productListId: this.previousItems.listId,
+        clickValue: ArrowClick.Down
+      });
     }
   }
 
-  ngOnInit() {
-    // TODO refactor and move to a service,
-    this.currentItems = new ProductList();
-    this.previousItems = new ProductList();
-    for (let index = 0; index < 20; index++) {
-      this.currentItems.addItem(`current ${index}`);
-    }
-
-    for (let index = 0; index < 10; index++) {
-      this.previousItems.addItem(`previous ${index}`);
-
-    }
-  }
-
+  o
 }

@@ -1,42 +1,51 @@
+<div class="row nav-modify-buttons mb-sm-2">
+    <div class="col-sm-5 btn-container">
+        <button class="btn btn-primary" (click)="openModalFormForAdd()">
+            <i class="fa fa-plus"> <span class="ml-sm-2">Add </span></i>
+        </button>
+    </div>
+
+    <div class=" col-sm-2 btn-container">
+        <button class="btn btn-secondary" *ngIf="selectedCurrentItemId || selectedPreviousItemId"
+            (click)="openModalFormForEdit()">
+            <i class="fa fa-edit"> <span id="edit-text" class="ml-sm-1">Edit</span> </i>
+        </button>
+    </div>
+
+    <div class="col-sm-5 btn-container">
+        <button class="btn btn-danger" *ngIf="selectedPreviousItemId && !selectedCurrentItemId"
+            (click)="openModalFormforDelete()">
+            <i class="fa fa-trash"> <span class="ml-sm-1">Delete </span></i>
+        </button>
+    </div>
+</div>
+
 <div class="row">
-    <app-product-list class="col-lg-5" [selectedItem]="selectedCurrentItemId"
+    <app-product-list class="col-sm-5" [selectedItem]="selectedCurrentItemId"
         (changeSelectedItem)="currentItemSelected($event)" [products]="currentItems" [header]="'Current'">
     </app-product-list>
 
-    <div class="col-lg-2 d-flex flex-column justify-content-around">
+    <div class="col-sm-2 d-flex flex-column justify-content-around nav-container">
         <div class="nav-buttons">
             <button class="btn btn-primary" (click)="moveSIFromCurrentToPrevious()">
-                <i class="fa fa-angle-double-right"></i>
+                <i class="fa fa-arrow-right"></i>
             </button>
             <button class="btn btn-primary" (click)="moveSIFromPreviousToCurrent()">
-                <i class="fa fa-angle-double-left"></i>
+                <i class="fa fa-arrow-left"></i>
             </button>
         </div>
 
         <div class="nav-buttons">
             <button class="btn btn-primary" (click)="moveSelectedItemUp()">
-                <i class="fa fa-angle-double-up"></i>
+                <i class="fa fa-arrow-up"></i>
             </button>
             <button class="btn btn-primary" (click)="moveSelectedItemDown()">
-                <i class="fa fa-angle-double-down"></i>
+                <i class="fa fa-arrow-down"></i>
             </button>
         </div>
     </div>
 
-    <app-product-list class="col-lg-5" [selectedItem]="selectedPreviousItemId"
-        (changeSelectedItem)="previousItemSelected($event)" [products]="previousItems" [header]="'previous'">
+    <app-product-list class="col-sm-5" [selectedItem]="selectedPreviousItemId"
+        (changeSelectedItem)="previousItemSelected($event)" [products]="previousItems" [header]="'Previous'">
     </app-product-list>
-</div>
-<div class="d-flex justify-content-start nav-modify-buttons">
-    <button class="btn btn-primary" (click)="openModalFormForAdd()">
-        <i class="fa fa-plus"> Add </i>
-    </button>
-
-    <button class="btn btn-secondary" *ngIf="selectedCurrentItemId || selectedPreviousItemId" (click)="openModalFormForEdit()">
-        <i class="fa fa-edit"> Edit </i>
-    </button>
-
-    <button class="btn btn-danger" *ngIf="selectedPreviousItemId && !selectedCurrentItemId" (click)="openModalFormforDelete()">
-        <i class="fa fa-trash"> Delete</i>
-    </button>
 </div>
