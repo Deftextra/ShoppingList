@@ -9,7 +9,6 @@ import { ItemClickValue } from '../models/item-click-value';
 })
 
 
-
 export class itemArrowClickService {
 
   private _click: BehaviorSubject<ItemClickValue> = new BehaviorSubject({

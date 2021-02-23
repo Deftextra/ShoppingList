@@ -89,13 +89,19 @@ export class ShoppingListComponentComponent implements OnInit {
 
     modalRef.componentInstance.isDelete = true;
 
-    modalRef.result.then((result: boolean) => {
+    if (this.selectedPreviousItemId) {
+      modalRef.componentInstance.deleteItemName = this.previousItems
+        .GetItemById(this.selectedPreviousItemId).ItemName;
+    }
 
-      if (this.selectedPreviousItemId && !this.selectedCurrentItemId) {
-        this.previousItems.DeleteProduct(this.selectedPreviousItemId);
-        this.selectedPreviousItemId = null;
+
+    modalRef.result.then((goAhead: boolean) => {
+      if (goAhead) {
+        if (this.selectedPreviousItemId && !this.selectedCurrentItemId) {
+          this.previousItems.DeleteProduct(this.selectedPreviousItemId);
+          this.selectedPreviousItemId = null;
+        }
       }
-      
     })
       .catch((error) => console.log(error));
 

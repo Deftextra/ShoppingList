@@ -20,6 +20,10 @@ export class AddItemFormComponent implements OnInit {
   @Input()
   isAdd: boolean = false;
 
+
+
+  @Input()
+  deleteItemName: string;
   @Input()
   editItemName: string;
   @Input()
@@ -52,9 +56,10 @@ export class AddItemFormComponent implements OnInit {
 
   }
 
-  public deleteItem() {
-    this.activeModal.close(true)
+  public deleteItem(isGoAhead: boolean) {
+    this.activeModal.close(isGoAhead)
   }
+
 
   ngOnInit() {
     this.createForm()
