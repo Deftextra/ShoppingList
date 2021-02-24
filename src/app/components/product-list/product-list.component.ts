@@ -26,7 +26,9 @@ export class ProductListComponent implements OnInit, OnChanges {
 
           if (item) {
             const r = item.Index % this.pageSize;
-            if (r === 0 && this.pageSize + 1) {
+            const q = Math.floor(item.Index/this.pageSize) + 1;
+            if (r === 0 && 
+              this.page === q - 1) {
               this.page++;
             }
           }
