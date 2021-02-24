@@ -198,5 +198,4 @@ export class ShoppingListComponentComponent implements OnInit {
     }
   }
 
-  o
 }
