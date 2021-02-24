@@ -19,15 +19,13 @@ export class ProductListComponent implements OnInit, OnChanges {
 
     this.arrowButtonService
       .arrowClicks.subscribe(click => {
-        console.log(click);
         if (click.clickValue === ArrowClick.Down &&
           click.productListId === this.products.listId) {
-
           const item = this.products.GetItemById(this.selectedItem);
 
           if (item) {
+            console.log(item.Index);
             const r = item.Index % this.pageSize;
-            const q = Math.floor(item.Index / this.pageSize) + 1;
             if (r === 0 && this.pageSize + 1) {
               this.page++;
             }
@@ -36,7 +34,6 @@ export class ProductListComponent implements OnInit, OnChanges {
 
         if (click.clickValue === ArrowClick.Up &&
           click.productListId == this.products.listId) {
-
           const item = this.products.GetItemById(this.selectedItem);
 
           if (item) {
@@ -46,10 +43,7 @@ export class ProductListComponent implements OnInit, OnChanges {
               this.page--;
             }
           }
-
-
         }
-
       });
 
   }

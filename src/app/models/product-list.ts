@@ -33,6 +33,10 @@ export class ProductList {
             Index: this.productItems.length
         }
 
+        if (HighPriority) {
+            return this.productItems.unshift(item);
+        }
+
         return this.productItems.push(item);
     }
 
@@ -74,8 +78,16 @@ export class ProductList {
             this.productItems[index].ItemName = newItemName
         }
 
-        if (newItemPriority !== undefined) {
+        if (newItemPriority) {
             this.productItems[index].HighPriority = newItemPriority;
+            this.productItems.unshift(this.DeleteProduct(productId));
+            this.productItems[0].Index = 0;
+
+            for (let index = 1; index < this.productItems.length; index++) {
+                this.productItems[index].Index++;
+            }
+
+            
         }
 
     }
@@ -83,7 +95,14 @@ export class ProductList {
     public moveItemDown(productId: number) {
         const index = this.productItems.findIndex((item) => item.ItemID === productId);
 
+        console.log(this.productItems[index]);
+
         if (index < this.productItems.length - 1) {
+            if (this.productItems[index].HighPriority &&
+                !this.productItems[index + 1].HighPriority) {
+                return
+            }
+
             const swapItem = this.productItems[index + 1];
 
             this.productItems[index].Index++;
@@ -98,7 +117,13 @@ export class ProductList {
         const index = this.productItems.findIndex((item) => item.ItemID === productId);
 
         if (index > 0) {
+            if (!this.productItems[index].HighPriority &&
+                this.productItems[index - 1].HighPriority) {
+                return;
+            }
+
             const swapItem = this.productItems[index - 1];
+
 
             this.productItems[index].Index--;
             this.productItems[index - 1] = this.productItems[index]
