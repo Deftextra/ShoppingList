@@ -113,6 +113,7 @@ export class ShoppingListComponentComponent implements OnInit {
     modalRef.componentInstance.isAdd = true;
 
     modalRef.result.then((result: AddFormValue) => {
+      console.log(result);
       this.currentItems.addItem(result.itemName, result.itemPriority);
     })
       .catch((error) => console.log(error))
@@ -146,7 +147,7 @@ export class ShoppingListComponentComponent implements OnInit {
       const item = this.previousItems.GetItemById(this.selectedPreviousItemId);
 
       modalRef.componentInstance.editItemName = item.ItemName;
-      modalRef.componentInstance.editItemPriority = item.ItemName;
+      modalRef.componentInstance.editItemPriority = item.HighPriority;
 
       modalRef.result.then((result: AddFormValue) => {
         this.previousItems.EditProduct(this.selectedPreviousItemId, result.itemName, result.itemPriority);
@@ -159,37 +160,41 @@ export class ShoppingListComponentComponent implements OnInit {
   // Refactor this code.
   public moveSelectedItemUp() {
     if (this.selectedCurrentItemId) {
-      this.currentItems.moveItemUp(this.selectedCurrentItemId);
-      this.arrowButtonService.arrowClick({
-        productListId: this.currentItems.listId,
-        clickValue: ArrowClick.Up
-      });
+      if (this.currentItems.moveItemUp(this.selectedCurrentItemId)) {
+        this.arrowButtonService.arrowClick({
+          productListId: this.currentItems.listId,
+          clickValue: ArrowClick.Up
+        });
+      }
     }
 
     if (this.selectedPreviousItemId) {
-      this.previousItems.moveItemUp(this.selectedPreviousItemId);
-      this.arrowButtonService.arrowClick({
-        productListId: this.previousItems.listId,
-        clickValue: ArrowClick.Up
-      });
+      if (this.previousItems.moveItemUp(this.selectedPreviousItemId)) {
+        this.arrowButtonService.arrowClick({
+          productListId: this.previousItems.listId,
+          clickValue: ArrowClick.Up
+        });
+      }
     }
   }
 
   public moveSelectedItemDown() {
     if (this.selectedCurrentItemId) {
-      this.currentItems.moveItemDown(this.selectedCurrentItemId);
-      this.arrowButtonService.arrowClick({
-        productListId: this.currentItems.listId,
-        clickValue: ArrowClick.Down
-      });
+      if (this.currentItems.moveItemDown(this.selectedCurrentItemId)) {
+        this.arrowButtonService.arrowClick({
+          productListId: this.currentItems.listId,
+          clickValue: ArrowClick.Down
+        });
+      }
     }
 
     if (this.selectedPreviousItemId) {
-      this.previousItems.moveItemDown(this.selectedPreviousItemId);
-      this.arrowButtonService.arrowClick({
-        productListId: this.previousItems.listId,
-        clickValue: ArrowClick.Down
-      });
+      if (this.previousItems.moveItemDown(this.selectedPreviousItemId)) {
+        this.arrowButtonService.arrowClick({
+          productListId: this.previousItems.listId,
+          clickValue: ArrowClick.Down
+        });
+      }
     }
   }
 

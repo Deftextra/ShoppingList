@@ -34,6 +34,10 @@ export class ProductList {
         }
 
         if (HighPriority) {
+            item.Index = 0;
+            for (let index = 1; index < this.productItems.length; index++) {
+                this.productItems[index].Index++;
+            }
             return this.productItems.unshift(item);
         }
 
@@ -44,6 +48,16 @@ export class ProductList {
     public addExistingItem(item: ListItem): number {
         item.Index = this.productItems.length;
         item.ListID = this.listId;
+
+        if (item.HighPriority) {
+            item.Index = 0;
+
+            for (let index = 1; index < this.productItems.length; index++) {
+                this.productItems[index].Index++;
+            }
+
+            return this.productItems.unshift(item);
+        }
 
         return this.productItems.push(item);
     }
@@ -92,15 +106,13 @@ export class ProductList {
 
     }
 
-    public moveItemDown(productId: number) {
+    public moveItemDown(productId: number): boolean {
         const index = this.productItems.findIndex((item) => item.ItemID === productId);
-
-        console.log(this.productItems[index]);
 
         if (index < this.productItems.length - 1) {
             if (this.productItems[index].HighPriority &&
                 !this.productItems[index + 1].HighPriority) {
-                return
+                return false;
             }
 
             const swapItem = this.productItems[index + 1];
@@ -110,6 +122,8 @@ export class ProductList {
 
             swapItem.Index--;
             this.productItems[index] = swapItem;
+            
+            return true;
         }
     }
 
@@ -119,7 +133,7 @@ export class ProductList {
         if (index > 0) {
             if (!this.productItems[index].HighPriority &&
                 this.productItems[index - 1].HighPriority) {
-                return;
+                return false;
             }
 
             const swapItem = this.productItems[index - 1];
@@ -130,6 +144,7 @@ export class ProductList {
 
             swapItem.Index++;
             this.productItems[index] = swapItem;
+            return true;
         }
     }
 
