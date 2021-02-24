@@ -3,15 +3,11 @@ import { v4 as uuidv4 } from 'uuid';
 
 export class ProductList {
 
-    public readonly listId: number = 0;
+    public readonly listId: number;
 
     private static productListCount: number = 0;
 
-    //TODO: make only this part enumerable and make private
     public productItems: ListItem[] = [];
-
-    //TODO: We should probaby create a move Item method
-    // moveItem()
 
     private constructor(listId: number) {
         this.listId = listId;
